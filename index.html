@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Aryan Singh Chauhan — DevOps Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Syne:wght@700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:#080c10; --bg2:#0d1117; --bg3:#161b22; --border:#21262d;
+  --green:#39d353; --cyan:#00d9ff; --yellow:#f0c14b; --purple:#a371f7;
+  --text:#e6edf3; --muted:#7d8590; --dim:#30363d;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;overflow-x:hidden;}
+.grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(0,217,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,217,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;background:rgba(8,12,16,0.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:var(--cyan);}
+.nav-logo span{color:var(--muted);}
+.nav-links{display:flex;gap:32px;list-style:none;}
+.nav-links a{font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--muted);text-decoration:none;transition:color 0.2s;cursor:pointer;}
+.nav-links a::before{content:'./';color:var(--dim);}
+.nav-links a:hover{color:var(--cyan);}
+.nav-cta{font-family:'JetBrains Mono',monospace;font-size:0.78rem;padding:8px 20px;background:transparent;border:1px solid var(--cyan);color:var(--cyan);border-radius:4px;cursor:pointer;text-decoration:none;transition:all 0.2s;}
+.nav-cta:hover{background:rgba(0,217,255,0.1);}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:100px 40px 60px;position:relative;z-index:2;max-width:1200px;margin:0 auto;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--green);margin-bottom:24px;padding:6px 14px;border:1px solid rgba(57,211,83,0.3);border-radius:20px;background:rgba(57,211,83,0.05);}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+.hero-name{font-family:'Syne',sans-serif;font-size:clamp(3rem,7vw,6rem);font-weight:800;line-height:1;margin-bottom:8px;background:linear-gradient(135deg,#e6edf3 0%,var(--cyan) 50%,var(--purple) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-title{font-family:'JetBrains Mono',monospace;font-size:clamp(1rem,2.5vw,1.4rem);color:var(--yellow);margin-bottom:24px;}
+.cursor-blink{display:inline-block;width:2px;height:1.2em;background:var(--yellow);margin-left:4px;vertical-align:middle;animation:blink 1s step-end infinite;}
+@keyframes blink{50%{opacity:0;}}
+.hero-desc{font-size:1.05rem;line-height:1.8;color:var(--muted);max-width:540px;margin-bottom:40px;}
+.hero-desc strong{color:var(--text);}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--cyan);color:var(--bg);font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:700;border-radius:6px;text-decoration:none;cursor:pointer;transition:all 0.2s;box-shadow:0 0 30px rgba(0,217,255,0.3);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(0,217,255,0.5);}
+.btn-secondary{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:transparent;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:0.85rem;border:1px solid var(--border);border-radius:6px;text-decoration:none;cursor:pointer;transition:all 0.2s;}
+.btn-secondary:hover{border-color:var(--cyan);color:var(--cyan);}
+.hero-right{flex:1;display:flex;justify-content:flex-end;padding-left:60px;}
+.terminal{width:100%;max-width:500px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;box-shadow:0 25px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(0,217,255,0.1);}
+.terminal-bar{padding:12px 16px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+.t-dot{width:12px;height:12px;border-radius:50%;}
+.t-red{background:#ff5f57;}.t-yellow{background:#febc2e;}.t-green{background:#28c840;}
+.terminal-title{margin-left:8px;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);}
+.terminal-body{padding:20px;font-family:'JetBrains Mono',monospace;font-size:0.8rem;line-height:2;}
+.t-line{display:flex;gap:8px;}
+.t-prompt{color:var(--green);}.t-cmd{color:var(--text);}
+.t-output{color:var(--muted);padding-left:16px;}
+.t-key{color:var(--cyan);}.t-val{color:var(--yellow);}.t-success{color:var(--green);}.t-tag{color:var(--purple);}
+.t-blank{height:8px;}
+
+/* STATS */
+.stats-bar{position:relative;z-index:2;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:24px 40px;}
+.stats-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);}
+.stat-item{padding:0 32px;border-right:1px solid var(--border);text-align:center;}
+.stat-item:first-child{padding-left:0;}
+.stat-item:last-child{border-right:none;}
+.stat-num{font-family:'Syne',sans-serif;font-size:2.2rem;font-weight:800;color:var(--cyan);display:block;}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);margin-top:4px;}
+
+/* SECTIONS */
+section{position:relative;z-index:2;padding:80px 40px;}
+.section-inner{max-width:1200px;margin:0 auto;}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--cyan);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px;}
+.section-label::before{content:'// ';color:var(--dim);}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;margin-bottom:48px;color:var(--text);}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;}
+.skill-card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:24px;transition:all 0.3s;}
+.skill-card:hover{border-color:var(--cyan);transform:translateY(-4px);}
+.skill-icon{font-size:1.8rem;margin-bottom:12px;display:block;}
+.skill-name{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;margin-bottom:12px;color:var(--text);}
+.skill-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.skill-tag{font-family:'JetBrains Mono',monospace;font-size:0.68rem;padding:3px 10px;border-radius:4px;background:rgba(0,217,255,0.08);border:1px solid rgba(0,217,255,0.2);color:var(--cyan);}
+.skill-tag.g{background:rgba(57,211,83,0.08);border-color:rgba(57,211,83,0.2);color:var(--green);}
+.skill-tag.y{background:rgba(240,193,75,0.08);border-color:rgba(240,193,75,0.2);color:var(--yellow);}
+.skill-tag.p{background:rgba(163,113,247,0.08);border-color:rgba(163,113,247,0.2);color:var(--purple);}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:24px;}
+.project-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:all 0.3s;display:flex;flex-direction:column;}
+.project-card:hover{border-color:var(--cyan);transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,0.5),0 0 30px rgba(0,217,255,0.1);}
+.project-header{padding:24px 24px 0;display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;}
+.project-icon{width:48px;height:48px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+.ic{background:rgba(0,217,255,0.1);border:1px solid rgba(0,217,255,0.2);}
+.ig{background:rgba(57,211,83,0.1);border:1px solid rgba(57,211,83,0.2);}
+.iy{background:rgba(240,193,75,0.1);border:1px solid rgba(240,193,75,0.2);}
+.ip{background:rgba(163,113,247,0.1);border:1px solid rgba(163,113,247,0.2);}
+.project-body{padding:0 24px 24px;flex:1;display:flex;flex-direction:column;}
+.project-name{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;margin-bottom:10px;color:var(--text);}
+.project-desc{font-size:0.88rem;line-height:1.7;color:var(--muted);margin-bottom:16px;flex:1;}
+.project-highlights{margin-bottom:16px;list-style:none;}
+.project-highlights li{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);padding:3px 0;display:flex;gap:8px;}
+.project-highlights li::before{content:'→';color:var(--cyan);flex-shrink:0;}
+.project-stack{display:flex;flex-wrap:wrap;gap:6px;}
+.gh-link{font-family:'JetBrains Mono',monospace;font-size:0.72rem;padding:6px 14px;border:1px solid var(--border);border-radius:4px;color:var(--muted);text-decoration:none;transition:all 0.2s;}
+.gh-link:hover{border-color:var(--cyan);color:var(--cyan);}
+
+/* EXPERIENCE / TIMELINE */
+.timeline{position:relative;padding-left:32px;}
+.timeline::before{content:'';position:absolute;left:8px;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--cyan),transparent);}
+.timeline-item{position:relative;margin-bottom:48px;}
+.timeline-item::before{content:'';position:absolute;left:-28px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--cyan);box-shadow:0 0 12px var(--cyan);}
+.timeline-date{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--cyan);margin-bottom:8px;}
+.timeline-role{font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:700;color:var(--text);margin-bottom:4px;}
+.timeline-company{font-size:0.88rem;color:var(--yellow);margin-bottom:16px;}
+.timeline-points{list-style:none;}
+.timeline-points li{font-size:0.88rem;color:var(--muted);line-height:1.7;padding:4px 0;display:flex;gap:10px;}
+.timeline-points li::before{content:'▸';color:var(--green);flex-shrink:0;margin-top:2px;}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;}
+.contact-left p{font-size:1.05rem;line-height:1.8;color:var(--muted);margin-bottom:32px;}
+.contact-left p strong{color:var(--text);}
+.contact-links{display:flex;flex-direction:column;gap:16px;}
+.contact-item{display:flex;align-items:center;gap:16px;padding:16px 20px;background:var(--bg2);border:1px solid var(--border);border-radius:8px;}
+.contact-icon{width:40px;height:40px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.contact-label{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--muted);display:block;}
+.contact-value{font-size:0.9rem;color:var(--text);font-weight:500;}
+.contact-right{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:32px;}
+.contact-right h3{font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:700;margin-bottom:24px;color:var(--text);}
+.form-group{margin-bottom:20px;}
+.form-label{display:block;font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);margin-bottom:8px;}
+.form-input{width:100%;padding:12px 16px;background:var(--bg);border:1px solid var(--border);border-radius:6px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s;}
+.form-input:focus{border-color:var(--cyan);}
+.form-input::placeholder{color:var(--dim);}
+textarea.form-input{resize:vertical;min-height:100px;}
+.btn-submit{width:100%;padding:14px;background:var(--cyan);color:var(--bg);font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:700;border:none;border-radius:6px;cursor:pointer;transition:all 0.2s;}
+.btn-submit:hover{box-shadow:0 0 30px rgba(0,217,255,0.4);}
+
+/* FOOTER */
+footer{position:relative;z-index:2;padding:32px 40px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.footer-text{font-family:'JetBrains Mono',monospace;font-size:0.72rem;color:var(--muted);}
+.footer-text span{color:var(--cyan);}
+
+/* ANIMATIONS */
+.reveal{opacity:0;transform:translateY(30px);transition:all 0.7s cubic-bezier(0.16,1,0.3,1);}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+@media(max-width:768px){
+  nav{padding:16px 20px;}.nav-links{display:none;}
+  .hero{flex-direction:column;padding:100px 20px 60px;}
+  .hero-right{padding-left:0;margin-top:40px;justify-content:center;}
+  .stats-inner{grid-template-columns:repeat(2,1fr);gap:20px;}
+  .stat-item{border-right:none;}
+  section{padding:60px 20px;}
+  .contact-grid{grid-template-columns:1fr;gap:40px;}
+  footer{flex-direction:column;gap:12px;text-align:center;}
+}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">aryan<span>@devops</span>:~$</div>
+  <ul class="nav-links">
+    <li><a onclick="goTo('skills')">skills</a></li>
+    <li><a onclick="goTo('projects')">projects</a></li>
+    <li><a onclick="goTo('experience')">experience</a></li>
+    <li><a onclick="goTo('contact')">contact</a></li>
+  </ul>
+  <a onclick="goTo('contact')" class="nav-cta">hire_me()</a>
+</nav>
+
+<!-- HERO -->
+<section style="padding-top:0;">
+  <div class="hero section-inner">
+    <div class="hero-left">
+      <div class="hero-tag">Available for DevOps roles &amp; freelance</div>
+      <h1 class="hero-name">Aryan Singh<br/>Chauhan</h1>
+      <div class="hero-title">
+        <span id="typed-text">DevOps Engineer</span><span class="cursor-blink"></span>
+      </div>
+      <p class="hero-desc">
+        Engineering graduate with hands-on experience in <strong>AWS cloud</strong>, <strong>Kubernetes</strong>, and <strong>CI/CD automation</strong>.
+        Built production-grade projects on AWS EKS with Jenkins, Terraform, Docker and Prometheus monitoring.
+        Seeking roles in <strong>cloud operations, DevOps, and platform engineering</strong>.
+      </p>
+      <div class="hero-btns">
+        <a onclick="goTo('projects')" class="btn-primary">⚡ View Projects</a>
+        <a onclick="goTo('contact')" class="btn-secondary">📧 Hire Me</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="terminal">
+        <div class="terminal-bar">
+          <div class="t-dot t-red"></div>
+          <div class="t-dot t-yellow"></div>
+          <div class="t-dot t-green"></div>
+          <span class="terminal-title">aryan@devops — infragpt-cluster</span>
+        </div>
+        <div class="terminal-body">
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> kubectl get pods -n infragpt</span></div>
+          <div class="t-output"><span class="t-success">✓</span> infragpt-pod-1 &nbsp;&nbsp; <span class="t-success">Running</span></div>
+          <div class="t-output"><span class="t-success">✓</span> infragpt-pod-2 &nbsp;&nbsp; <span class="t-success">Running</span></div>
+          <div class="t-blank"></div>
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> terraform output</span></div>
+          <div class="t-output"><span class="t-key">cluster_name</span> = <span class="t-val">"infragpt-cluster"</span></div>
+          <div class="t-output"><span class="t-key">region</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= <span class="t-val">"ap-south-1"</span></div>
+          <div class="t-blank"></div>
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> curl /health</span></div>
+          <div class="t-output">{"status":<span class="t-success">"UP"</span>,"pods":<span class="t-val">2</span>,"hpa":<span class="t-success">"active"</span>}</div>
+          <div class="t-blank"></div>
+          <div class="t-line"><span class="t-prompt">$</span><span class="t-cmd"> git push origin main</span></div>
+          <div class="t-output"><span class="t-tag">→</span> Jenkins pipeline triggered</div>
+          <div class="t-output"><span class="t-success">✓</span> Build #42 — <span class="t-success">SUCCESS</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item">
+      <span class="stat-num">3+</span>
+      <div class="stat-label">Production Projects</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">7</span>
+      <div class="stat-label">Jenkins Pipeline Stages</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">10+</span>
+      <div class="stat-label">AWS Services Used</div>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">0</span>
+      <div class="stat-label">Downtime Deployments</div>
+    </div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills" style="background:var(--bg);">
+  <div class="section-inner">
+    <div class="section-label">expertise</div>
+    <h2 class="section-title">Technical Skills</h2>
+    <div class="skills-grid">
+
+      <div class="skill-card reveal">
+        <span class="skill-icon">☁️</span>
+        <div class="skill-name">Cloud — AWS</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;line-height:1.6;">
+          Hands-on experience setting up and managing cloud environments on AWS. Built VPCs, configured IAM roles, deployed EC2 instances, and worked with S3, RDS, Lambda and CloudWatch.
+        </p>
+        <div class="skill-tags">
+          <span class="skill-tag">EC2</span><span class="skill-tag">EKS</span><span class="skill-tag">S3</span>
+          <span class="skill-tag">IAM</span><span class="skill-tag">VPC</span><span class="skill-tag">RDS</span>
+          <span class="skill-tag">Lambda</span><span class="skill-tag">CloudWatch</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <span class="skill-icon">⚙️</span>
+        <div class="skill-name">CI/CD &amp; Automation</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;line-height:1.6;">
+          Built 7-stage Jenkins pipelines with GitHub webhook triggers. Automated builds, security scans (Trivy, OWASP, SonarQube), DockerHub push, Terraform apply and EKS deployments end to end.
+        </p>
+        <div class="skill-tags">
+          <span class="skill-tag g">Jenkins</span><span class="skill-tag g">GitHub Actions</span>
+          <span class="skill-tag g">ArgoCD</span><span class="skill-tag g">Trivy</span>
+          <span class="skill-tag g">SonarQube</span><span class="skill-tag g">OWASP</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <span class="skill-icon">🐳</span>
+        <div class="skill-name">Docker &amp; Kubernetes</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;line-height:1.6;">
+          Built multi-stage Docker images with non-root users. Deployed apps on AWS EKS with HPA autoscaling (2→6 pods), RollingUpdate zero-downtime strategy, PodDisruptionBudget and liveness probes.
+        </p>
+        <div class="skill-tags">
+          <span class="skill-tag y">Docker</span><span class="skill-tag y">Kubernetes</span>
+          <span class="skill-tag y">AWS EKS</span><span class="skill-tag y">HPA</span>
+          <span class="skill-tag y">Helm</span><span class="skill-tag y">kubectl</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <span class="skill-icon">🏗️</span>
+        <div class="skill-name">Infrastructure as Code</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;line-height:1.6;">
+          Provisioned complete AWS infrastructure using Terraform — VPC with public/private subnets, NAT gateway, EKS cluster with managed node groups and S3 buckets. Used Ansible for configuration management.
+        </p>
+        <div class="skill-tags">
+          <span class="skill-tag p">Terraform</span><span class="skill-tag p">Ansible</span>
+          <span class="skill-tag p">VPC Modules</span><span class="skill-tag p">EKS Modules</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <span class="skill-icon">📊</span>
+        <div class="skill-name">Monitoring &amp; Observability</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;line-height:1.6;">
+          Set up Prometheus to scrape /metrics every 15 seconds and Grafana dashboards for real-time visualization of CPU, memory, pod count and request rates. Configured CloudWatch for AWS-level alerts.
+        </p>
+        <div class="skill-tags">
+          <span class="skill-tag">Prometheus</span><span class="skill-tag">Grafana</span>
+          <span class="skill-tag">CloudWatch</span><span class="skill-tag">Actuator</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <span class="skill-icon">🐧</span>
+        <div class="skill-name">Linux &amp; Networking</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;line-height:1.6;">
+          Comfortable with Linux shell scripting, file permissions, systemd service management and bash automation. Strong understanding of subnets, CIDR, routing tables, NAT, load balancers and DNS.
+        </p>
+        <div class="skill-tags">
+          <span class="skill-tag g">Bash</span><span class="skill-tag g">Shell Scripting</span>
+          <span class="skill-tag g">Systemd</span><span class="skill-tag g">Subnets</span>
+          <span class="skill-tag g">CIDR</span><span class="skill-tag g">NAT</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <span class="skill-icon">🔐</span>
+        <div class="skill-name">Security</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;line-height:1.6;">
+          Applied security best practices — IAM roles with least privilege, security groups, NACLs, Kubernetes secrets for sensitive data, Trivy image scanning and non-root Docker containers.
+        </p>
+        <div class="skill-tags">
+          <span class="skill-tag y">IAM Roles</span><span class="skill-tag y">Security Groups</span>
+          <span class="skill-tag y">NACLs</span><span class="skill-tag y">K8s Secrets</span>
+          <span class="skill-tag y">Trivy</span>
+        </div>
+      </div>
+
+      <div class="skill-card reveal">
+        <span class="skill-icon">💻</span>
+        <div class="skill-name">Development</div>
+        <p style="font-size:0.82rem;color:var(--muted);margin-bottom:12px;line-height:1.6;">
+          Backend development with Java Spring Boot and Python Flask. Experience with REST APIs, Spring Security, Hibernate ORM, MySQL and Git version control.
+        </p>
+        <div class="skill-tags">
+          <span class="skill-tag p">Java</span><span class="skill-tag p">Spring Boot</span>
+          <span class="skill-tag p">Python</span><span class="skill-tag p">Flask</span>
+          <span class="skill-tag p">MySQL</span><span class="skill-tag p">Git</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" style="background:var(--bg2);">
+  <div class="section-inner">
+    <div class="section-label">work</div>
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="projects-grid">
+
+      <!-- InfraGPT -->
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon ic">⚡</div>
+          <a href="https://github.com/AryanSingh9832/infragpt" target="_blank" rel="noopener" class="gh-link">GitHub →</a>
+        </div>
+        <div class="project-body">
+          <div class="project-name">InfraGPT — AI-Powered DevOps Assistant</div>
+          <div class="project-desc">
+            AI chatbot that answers DevOps and AWS questions, built with Python Flask and Groq LLM (llama-3.3-70b). Deployed on AWS EKS Mumbai region with a complete 7-stage Jenkins CI/CD pipeline, Terraform IaC, Kubernetes HPA autoscaling and Prometheus/Grafana monitoring.
+          </div>
+          <ul class="project-highlights">
+            <li>7-stage Jenkins pipeline — Checkout, Docker Build, Trivy Scan, DockerHub Push, Terraform Apply, EKS Deploy, Health Check</li>
+            <li>HPA autoscales pods 2 to 6 on 60% CPU or 70% memory</li>
+            <li>Zero downtime RollingUpdate with maxUnavailable: 0</li>
+            <li>Terraform provisions VPC, EKS cluster and S3 on ap-south-1</li>
+            <li>GitHub webhook triggers full pipeline on every git push</li>
+            <li>Prometheus scrapes /metrics every 15s, Grafana dashboards live</li>
+          </ul>
+          <div class="project-stack">
+            <span class="stack-tag">Python</span><span class="stack-tag">Flask</span>
+            <span class="stack-tag">Groq LLM</span><span class="stack-tag">Docker</span>
+            <span class="stack-tag">Jenkins</span><span class="stack-tag">Terraform</span>
+            <span class="stack-tag">AWS EKS</span><span class="stack-tag">Kubernetes</span>
+            <span class="stack-tag">Prometheus</span><span class="stack-tag">Grafana</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- StreamFlix -->
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon ig">🎬</div>
+          <a href="https://github.com/AryanSingh9832" target="_blank" rel="noopener" class="gh-link">GitHub →</a>
+        </div>
+        <div class="project-body">
+          <div class="project-name">StreamFlix — DevOps CI/CD Pipeline</div>
+          <div class="project-desc">
+            Implemented end-to-end CI/CD pipeline for a video streaming application using Jenkins, Docker and Kubernetes on AWS. Automated container orchestration and deployment, reducing manual deployment time by 70%.
+          </div>
+          <ul class="project-highlights">
+            <li>End-to-end CI/CD pipeline with Jenkins — automated full deployment lifecycle</li>
+            <li>Reduced manual deployment time by 70% through automation</li>
+            <li>Grafana + Prometheus for real-time monitoring of application metrics</li>
+            <li>Docker image repositories with OWASP dependency check security scans</li>
+            <li>Automated container orchestration and scaling on Kubernetes</li>
+          </ul>
+          <div class="project-stack">
+            <span class="stack-tag">Jenkins</span><span class="stack-tag">Docker</span>
+            <span class="stack-tag">Kubernetes</span><span class="stack-tag">AWS</span>
+            <span class="stack-tag">Prometheus</span><span class="stack-tag">Grafana</span>
+            <span class="stack-tag">OWASP</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- DirectBuy -->
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon iy">🛒</div>
+          <a href="https://github.com/salmonstone/-DirectBuy-E-commerce-Backend-Service-" target="_blank" rel="noopener" class="gh-link">GitHub →</a>
+        </div>
+        <div class="project-body">
+          <div class="project-name">DirectBuy — E-commerce Backend Service</div>
+          <div class="project-desc">
+            Developed a secure RESTful API using Spring Boot and Hibernate for an e-commerce platform handling user authentication and order management. Containerized and deployed on AWS EC2 with RDS database integration.
+          </div>
+          <ul class="project-highlights">
+            <li>Secure RESTful API with Spring Boot — user auth, cart, order management</li>
+            <li>OAuth2 security implementation with optimized database queries</li>
+            <li>API response time improved by 40% through query optimization</li>
+            <li>Microservices architecture with MySQL ensuring data consistency</li>
+            <li>Containerized with Docker, deployed on AWS EC2 with RDS</li>
+          </ul>
+          <div class="project-stack">
+            <span class="stack-tag">Spring Boot</span><span class="stack-tag">Hibernate</span>
+            <span class="stack-tag">MySQL</span><span class="stack-tag">OAuth2</span>
+            <span class="stack-tag">Docker</span><span class="stack-tag">AWS EC2</span>
+            <span class="stack-tag">RDS</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tetris -->
+      <div class="project-card reveal">
+        <div class="project-header">
+          <div class="project-icon ip">🎮</div>
+          <a href="https://github.com/AryanSingh9832" target="_blank" rel="noopener" class="gh-link">GitHub →</a>
+        </div>
+        <div class="project-body">
+          <div class="project-name">Tetris Game — Full DevOps Pipeline</div>
+          <div class="project-desc">
+            Built a complete end-to-end CI/CD pipeline for a Tetris game using Jenkins on AWS EC2 with Terraform automation. Deployed to AWS EKS using ArgoCD with automated image updates and GitOps-driven delivery.
+          </div>
+          <ul class="project-highlights">
+            <li>Full CI/CD pipeline on AWS EC2 with Terraform infrastructure automation</li>
+            <li>Integrated SonarQube, NPM, OWASP and file scanning for code security</li>
+            <li>Trivy image scanning — pushed only secure images to DockerHub</li>
+            <li>Deployed to AWS EKS using ArgoCD GitOps with automated image updates</li>
+            <li>Zero-downtime releases with infrastructure monitoring</li>
+          </ul>
+          <div class="project-stack">
+            <span class="stack-tag">Jenkins</span><span class="stack-tag">ArgoCD</span>
+            <span class="stack-tag">Trivy</span><span class="stack-tag">SonarQube</span>
+            <span class="stack-tag">Terraform</span><span class="stack-tag">AWS EKS</span>
+            <span class="stack-tag">Docker</span><span class="stack-tag">GitOps</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" style="background:var(--bg);">
+  <div class="section-inner">
+    <div class="section-label">journey</div>
+    <h2 class="section-title">Education &amp; Experience</h2>
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">2022 — Present</div>
+        <div class="timeline-role">B.Tech — Computer Science Engineering</div>
+        <div class="timeline-company">Galgotias University, Greater Noida</div>
+        <ul class="timeline-points">
+          <li>Studying cloud computing, distributed systems, DevOps and software engineering</li>
+          <li>Built 4 production-grade projects deployed on AWS EKS as part of learning</li>
+          <li>Hands-on with enterprise CI/CD pipelines, Kubernetes and Terraform IaC</li>
+          <li>Active in cloud and DevOps communities, continuously building real-world skills</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Professional Training</div>
+        <div class="timeline-role">AWS Cloud &amp; DevOps — Intensive Training</div>
+        <div class="timeline-company">Industry Certification Program</div>
+        <ul class="timeline-points">
+          <li>In-depth training on cloud infrastructure, containerization and automation tools</li>
+          <li>Hands-on labs: EC2, EKS, S3, VPC, IAM, CloudWatch, Lambda, RDS</li>
+          <li>Built and deployed Jenkins pipelines, Docker containers, Kubernetes clusters</li>
+          <li>Terraform for infrastructure as code, Ansible for configuration management</li>
+          <li>Monitoring with Prometheus and Grafana on live Kubernetes clusters</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Professional Training</div>
+        <div class="timeline-role">Java Enterprise Development</div>
+        <div class="timeline-company">Advanced Training Program</div>
+        <ul class="timeline-points">
+          <li>Advanced Spring Framework — Spring Boot, Spring MVC, Spring Security</li>
+          <li>Hibernate ORM and JPA for database management with MySQL</li>
+          <li>RESTful API design and development with Spring Boot</li>
+          <li>OAuth2 security, JWT authentication and authorization</li>
+          <li>Microservices architecture design patterns</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">Professional Training</div>
+        <div class="timeline-role">Full Stack Technologies</div>
+        <div class="timeline-company">Comprehensive Training Program</div>
+        <ul class="timeline-points">
+          <li>Frontend and backend development covering HTML, CSS, JavaScript</li>
+          <li>React.js for building modern frontend interfaces</li>
+          <li>Integration of frontend with Spring Boot REST APIs</li>
+          <li>Database design and query optimization with MySQL</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-date">2022</div>
+        <div class="timeline-role">Class XII — CBSE</div>
+        <div class="timeline-company">BSF School — 75%</div>
+        <ul class="timeline-points">
+          <li>Science stream with Computer Science</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" style="background:var(--bg2);">
+  <div class="section-inner">
+    <div class="section-label">connect</div>
+    <h2 class="section-title">Get In Touch</h2>
+    <div class="contact-grid">
+      <div class="contact-left reveal">
+        <p>
+          Looking for a <strong>DevOps Engineer</strong> who can build production-grade AWS infrastructure from scratch?
+          I am available for <strong>full-time DevOps roles</strong> and <strong>freelance cloud projects</strong>.
+          I bring hands-on experience with Jenkins, Kubernetes, Terraform and AWS to every project.
+        </p>
+        <div class="contact-links">
+          <div class="contact-item">
+            <div class="contact-icon ic">📧</div>
+            <div>
+              <span class="contact-label">EMAIL</span>
+              <span class="contact-value">arysingh9832@gmail.com</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon" style="background:rgba(57,211,83,0.1);border:1px solid rgba(57,211,83,0.2);">⌥</div>
+            <div>
+              <span class="contact-label">GITHUB</span>
+              <span class="contact-value">github.com/AryanSingh9832</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon iy">💼</div>
+            <div>
+              <span class="contact-label">LINKEDIN</span>
+              <span class="contact-value">linkedin.com/in/AryanSingh</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon ip">📱</div>
+            <div>
+              <span class="contact-label">PHONE</span>
+              <span class="contact-value">+91-9832936894</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon ic">📍</div>
+            <div>
+              <span class="contact-label">LOCATION</span>
+              <span class="contact-value">Greater Noida, Uttar Pradesh, India</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="contact-right reveal">
+        <h3>Send a Message</h3>
+        <form onsubmit="handleSubmit(event)">
+          <div class="form-group">
+            <label class="form-label">your_name</label>
+            <input type="text" class="form-input" placeholder="John Doe" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">your_email</label>
+            <input type="email" class="form-input" placeholder="john@company.com" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">subject</label>
+            <input type="text" class="form-input" placeholder="DevOps role / Freelance project"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">message</label>
+            <textarea class="form-input" placeholder="Hi Aryan, I'd like to discuss..." required></textarea>
+          </div>
+          <button type="submit" class="btn-submit">send_message() →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-text">© 2025 <span>Aryan Singh Chauhan</span> — DevOps Engineer</div>
+  <div class="footer-text">Built with ❤️ and lots of <span>kubectl</span> commands</div>
+</footer>
+
+<script>
+function goTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+}
+
+// Typed text animation
+const words = ['DevOps Engineer','Cloud Engineer','AWS Specialist','K8s Engineer','CI/CD Expert'];
+let wi=0, ci=0, del=false;
+const el = document.getElementById('typed-text');
+function type() {
+  const w = words[wi];
+  if (!del) { el.textContent = w.slice(0,++ci); if(ci===w.length){del=true;setTimeout(type,2000);return;} }
+  else { el.textContent = w.slice(0,--ci); if(ci===0){del=false;wi=(wi+1)%words.length;} }
+  setTimeout(type, del?60:100);
+}
+type();
+
+// Scroll reveal
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e,i) => { if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*100); });
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// Form — opens email client with message
+function handleSubmit(e) {
+  e.preventDefault();
+  const name = e.target.querySelector('input[type=text]').value;
+  const email = e.target.querySelector('input[type=email]').value;
+  const subject = e.target.querySelectorAll('input[type=text]')[1]?.value || 'Portfolio Contact';
+  const message = e.target.querySelector('textarea').value;
+  const mailto = `mailto:arysingh9832@gmail.com?subject=${encodeURIComponent(subject + ' — from ' + name)}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message)}`;
+  window.open(mailto);
+  const btn = e.target.querySelector('.btn-submit');
+  btn.textContent = '✓ opening email client...';
+  btn.style.background = 'var(--green)';
+  setTimeout(()=>{ btn.textContent='send_message() →'; btn.style.background='var(--cyan)'; },3000);
+}
+</script>
+</body>
+</html>
